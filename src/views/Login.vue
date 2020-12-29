@@ -59,8 +59,8 @@ export default {
             },
             {
               min: 2,
-              max: 6,
-              message: '用户名长度为2-6个字符的',
+              max: 16,
+              message: '用户名长度为2-16个字符的',
               trigger: 'blur',
             },
           ],

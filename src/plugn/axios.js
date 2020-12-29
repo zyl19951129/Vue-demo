@@ -41,4 +41,26 @@ Vue.prototype._plugns = {
       data,
     });
   },
+  delUsers(id) {
+    return request({
+      method: 'DELETE',
+      url: `/users/${id}`,
+    });
+  },
+  editUsers(data) {
+    return request({
+      method: 'PUT',
+      url: `/users/${data.id}`,
+      data: {
+        email: data.email,
+        mobile: data.mobile,
+      },
+    });
+  },
+  editState(uid, state) {
+    return request({
+      method: 'PUT',
+      url: `/users/${uid}/state/${state}`,
+    });
+  },
 };
