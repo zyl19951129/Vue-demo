@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
+import router from '../router/index.js';
 
 const request = axios.create({
   baseURL: 'http://127.0.0.1:8888/api/private/v1',
@@ -11,6 +12,14 @@ request.interceptors.request.use((config) => {
     config.headers.Authorization = localStorage.getItem('token');
   }
   return config;
+});
+
+request.interceptors.response.use((res) => {
+  if (res.data.meta.status === 400) {
+    localStorage.removeItem('token');
+    router.push('/login');
+  }
+  return res;
 });
 
 Vue.prototype._plugns = {
@@ -61,6 +70,43 @@ Vue.prototype._plugns = {
     return request({
       method: 'PUT',
       url: `/users/${uid}/state/${state}`,
+    });
+  },
+  getRightsInfo(type) {
+    return request({
+      method: 'GET',
+      url: `rights/${type}`,
+    });
+  },
+  getRolesInfo() {
+    return request({
+      method: 'GET',
+      url: 'roles',
+    });
+  },
+  delRolesOfAppoint(roleId, rightId) {
+    return request({
+      method: 'DELETE',
+      url: `roles/${roleId.id}/rights/${rightId}`,
+    });
+  },
+  addNewRoles(roleName, roleDesc) {
+    return request({
+      method: 'POST',
+      url: 'roles',
+      data: {
+        roleName,
+        roleDesc,
+      },
+    });
+  },
+  addRolesOfAppoint(data, roleId) {
+    return request({
+      method: 'POST',
+      url: `roles/${roleId}/rights`,
+      data: {
+        rids: data,
+      },
     });
   },
 };

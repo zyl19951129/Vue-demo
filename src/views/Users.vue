@@ -102,6 +102,7 @@
               icon="el-icon-edit"
               size="mini"
               @click="editUser(slotProps.row)"
+              :style="{ marginRight: 10 + 'px' }"
             ></el-button>
             <el-dialog
               title="修改用户"
@@ -317,7 +318,6 @@ export default {
         });
     },
     editUser({ username, email, mobile, id }) {
-      console.log(mobile);
       this.editUserDisLog.visible = true;
       this.editUserDisLog.form.ruleForm.username = username;
       this.editUserDisLog.form.ruleForm.email = email;
@@ -332,7 +332,6 @@ export default {
       // this.editUserDisLog.visible = true;
       this._plugns.editUsers(this.editUserDisLog.form.ruleForm).then((res) => {
         if (res.data.meta.status === 200) {
-          console.log(res);
           this.editUserDisLog.visible = false;
           this.editUserDisLog.form.ruleForm.email = res.data.data.mobile;
           this.editUserDisLog.form.ruleForm.mobile = res.data.data.email;

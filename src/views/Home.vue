@@ -13,7 +13,7 @@
       <el-container>
         <el-aside width="200px">
           <el-menu
-            default-active="2"
+            :default-active="defActivePath"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -88,6 +88,11 @@ export default {
         localStorage.removeItem('token');
         this.$router.push('/login');
       });
+    },
+  },
+  computed: {
+    defActivePath() {
+      return this.$route.path.slice(1);
     },
   },
   created() {
